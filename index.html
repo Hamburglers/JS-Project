@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+</head>
+<body>
+    <button onclick="playRound()">Play Rock-Paper-Scissors</button>
+
+    <script>
+        function getComputerChoice() {
+            let num = Math.floor(Math.random() * 3);
+            switch (num) {
+                case 0: 
+                    return "rock";
+                case 1:
+                    return "paper";
+                case 2:
+                    return "scissors";
+            }
+        }
+
+        function play(playerSelection, computerSelection) {
+            if (playerSelection.toLowerCase() === "rock" && computerSelection === "scissors") {
+                return "You win, rock beats scissors"
+            } else  if (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper") {
+                return "You win, scissors beats paper"
+            } else if (playerSelection.toLowerCase() === "paper" && computerSelection === "rock") {
+                return "You win, paper beats rock"
+            } else {
+                return "You lose"
+            }
+        }
+
+        function playRound() {
+            for (let i = 0; i < 5; i++) {
+                let result = play(prompt("Enter your choice"), getComputerChoice());
+                console.log(result); // or use alert(result) to show it in an alert box
+            }
+        }
+    </script>
+</body>
+</html>
