@@ -6,7 +6,10 @@
     <title>Rock Paper Scissors Game</title>
 </head>
 <body>
-    <button onclick="playRound()">Play Rock-Paper-Scissors</button>
+    <button id="rock">Rock</button>
+    <button id="scissors">Scissors</button>
+    <button id="paper">Paper</button>
+    <div id="container"></div>
 
     <script>
         function getComputerChoice() {
@@ -20,25 +23,66 @@
                     return "scissors";
             }
         }
-
         function play(playerSelection, computerSelection) {
-            if (playerSelection.toLowerCase() === "rock" && computerSelection === "scissors") {
-                return "You win, rock beats scissors"
-            } else  if (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper") {
+            playerSelection = playerSelection.toLowerCase();
+
+            if (playerSelection === "rock" && computerSelection === "scissors") {
+                playerWin++
+                return "You win, rock beats scissors";
+                
+            } else if (playerSelection === "scissors" && computerSelection === "paper") {
+                playerWin++
                 return "You win, scissors beats paper"
-            } else if (playerSelection.toLowerCase() === "paper" && computerSelection === "rock") {
-                return "You win, paper beats rock"
+            } else if (playerSelection === "paper" && computerSelection === "rock") {
+                playerWin++
+                return "You win, paper beats rock";
+            } else if (playerSelection === computerSelection) {
+                return "It's a tie!";
             } else {
-                return "You lose"
+                computerWin++
+                return `You lose, ${playerSelection} loses to ${computerSelection}`;
             }
         }
 
-        function playRound() {
-            for (let i = 0; i < 5; i++) {
-                let result = play(prompt("Enter your choice"), getComputerChoice());
-                console.log(result); // or use alert(result) to show it in an alert box
+        function checkEnd() {
+            if (playerWin === 5 || computerWin === 5) {
+                let finalMessage = playerWin === 5 ? `You win ${playerWin}:${computerWin}` : `You lose ${playerWin}:${computerWin}`;
+                content.textContent = finalMessage;
+                playerWin = 0;
+                computerWin = 0;
             }
         }
+
+
+        let output = ""
+        let playerWin = 0
+        let computerWin = 0
+        const rock = document.querySelector("#rock")
+        rock.addEventListener('click', () => {
+            output = play("rock", getComputerChoice())
+            content.textContent = output
+            checkEnd()
+        })
+
+        const paper = document.querySelector("#paper")
+        paper.addEventListener('click', () => {
+            output = play("paper", getComputerChoice())
+            content.textContent = output
+            checkEnd()
+        })
+
+        const scissors = document.querySelector("#scissors")
+        scissors.addEventListener('click', () => {
+            output = play("scissors", getComputerChoice())
+            content.textContent = output
+            checkEnd()
+        })
+
+        const container = document.querySelector("#container")
+        const content = document.createElement("div")
+        container.appendChild(content)
+
+
     </script>
 </body>
 </html>
